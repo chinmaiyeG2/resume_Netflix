@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chinmaiye Gandhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Netflix+Sans:wght@400;500;700&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red: #E50914;
+  --red-dark: #b20710;
+  --bg: #141414;
+  --card: #1f1f1f;
+  --card-hover: #2a2a2a;
+  --text: #e5e5e5;
+  --muted: #999;
+  --white: #fff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1rem 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+  transition: background 0.3s;
+}
+nav.scrolled { background: rgba(20,20,20,0.97); }
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--red);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ── HERO ── */
+.hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 4% 8%;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.3) 70%, transparent 100%),
+    linear-gradient(to top, rgba(20,20,20,1) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 40%, #1a0000 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 60%, #0a0a0a 0%, #141414 100%);
+}
+
+/* Animated particles */
+.particles { position: absolute; inset: 0; overflow: hidden; }
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--red);
+  opacity: 0;
+  animation: float linear infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 0.3; }
+  90%  { opacity: 0.1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* Big cinematic title */
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+.hero-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  opacity: 0;
+  animation: slideUp 0.6s ease 0.3s forwards;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  text-shadow: 0 0 80px rgba(229,9,20,0.3);
+  opacity: 0;
+  animation: slideUp 0.7s ease 0.45s forwards;
+}
+
+.hero-name span { color: var(--red); }
+
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  animation: slideUp 0.6s ease 0.6s forwards;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: slideUp 0.6s ease 0.75s forwards;
+}
+
+.match-score {
+  color: #46d369;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.hero-badge {
+  border: 1px solid var(--muted);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.8rem;
+  opacity: 0;
+  animation: slideUp 0.6s ease 0.9s forwards;
+}
+
+.btn-play {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--white);
+  color: #000;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Barlow', sans-serif;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.btn-play:hover { background: rgba(255,255,255,0.75); }
+.btn-play svg { width: 22px; height: 22px; }
+
+.btn-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(109,109,110,0.7);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Barlow', sans-serif;
+  transition: background 0.2s;
+}
+.btn-info:hover { background: rgba(109,109,110,0.4); }
+
+/* ── ROWS ── */
+.content { padding: 0 4%; padding-bottom: 5rem; }
+
+.row { margin-bottom: 3.5rem; }
+
+.row-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.row-title span {
+  font-size: 0.75rem;
+  color: #46d369;
+  font-weight: 600;
+  margin-left: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Card slider */
+.cards {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.cards::-webkit-scrollbar { display: none; }
+.cards:active { cursor: grabbing; }
+
+/* Experience Cards */
+.exp-card {
+  flex-shrink: 0;
+  width: 300px;
+  background: var(--card);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, z-index 0s;
+  cursor: pointer;
+}
+
+.exp-card:hover {
+  transform: scale(1.08) translateY(-6px);
+  z-index: 10;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+
+.exp-card-thumb {
+  height: 170px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.thumb-company {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: rgba(255,255,255,0.08);
+  position: absolute;
+  bottom: -0.5rem;
+  right: 0.5rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.thumb-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--white);
+  letter-spacing: 0.1em;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.thumb-logo-img {
+  position: relative;
+  z-index: 1;
+  max-width: 140px;
+  max-height: 55px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  drop-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.thumb-logo-img.color-logo {
+  filter: none;
+  opacity: 1;
+}
+
+/* Modal logo */
+.modal-logo-wrap {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.5rem;
+  z-index: 2;
+}
+.modal-logo-wrap img {
+  max-height: 38px;
+  max-width: 130px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+/* Featured logo */
+.featured-logo {
+  margin-bottom: 0.6rem;
+}
+.featured-logo img {
+  max-height: 36px;
+  max-width: 130px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+.thumb-years {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  background: var(--red);
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.exp-card-body {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.card-role {
+  font-size: 0.75rem;
+  color: var(--red);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.card-company-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.card-period {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.7rem;
+}
+
+.card-tag {
+  background: rgba(229,9,20,0.15);
+  border: 1px solid rgba(229,9,20,0.3);
+  color: #ff6b6b;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-desc {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Stat Cards */
+.stat-cards {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.stat-cards::-webkit-scrollbar { display: none; }
+
+.stat-card {
+  flex-shrink: 0;
+  width: 200px;
+  background: var(--card);
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: transform 0.25s;
+  border-left: 3px solid var(--red);
+}
+.stat-card:hover { transform: scale(1.05); background: var(--card-hover); }
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--white);
+  line-height: 1;
+}
+.stat-num sup { font-size: 1.4rem; color: var(--red); vertical-align: super; }
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Skill Cards */
+.skill-cards {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.skill-cards::-webkit-scrollbar { display: none; }
+
+.skill-card {
+  flex-shrink: 0;
+  width: 180px;
+  background: var(--card);
+  border-radius: 4px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: transform 0.25s, background 0.2s;
+  cursor: default;
+}
+.skill-card:hover { transform: scale(1.06); background: var(--card-hover); }
+
+.skill-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--red);
+  line-height: 1;
+}
+
+.skill-name-card {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0.3rem 0 0.5rem;
+}
+
+.skill-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--red), #ff6b6b);
+  width: 0;
+  transition: width 1.2s ease;
+  border-radius: 2px;
+}
+
+/* Education row */
+.edu-card {
+  flex-shrink: 0;
+  width: 360px;
+  background: var(--card);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.edu-card:hover { transform: scale(1.04); }
+
+.edu-thumb {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.edu-year-bg {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 8rem;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  line-height: 1;
+}
+
+.edu-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--white);
+  letter-spacing: 0.12em;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.edu-body { padding: 1rem 1.2rem 1.2rem; }
+
+.edu-degree-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.edu-school-text {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.edu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(70,211,105,0.15);
+  border: 1px solid rgba(70,211,105,0.3);
+  color: #46d369;
+  font-size: 0.65rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── FEATURED SECTION ── */
+.featured {
+  position: relative;
+  background: linear-gradient(to right, #0a0a0a 0%, var(--card) 100%);
+  border-radius: 4px;
+  padding: 2.5rem 3rem;
+  margin-bottom: 3.5rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.featured::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--red);
+}
+
+.featured-text {}
+
+.featured-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.featured-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+}
+
+.featured-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.featured-stats {
+  display: flex;
+  gap: 3rem;
+  flex-shrink: 0;
+}
+
+.f-stat {}
+.f-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: var(--red);
+  line-height: 1;
+}
+.f-stat-num sup { font-size: 1.5rem; vertical-align: super; }
+.f-stat-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #181818;
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  border-radius: 8px;
+  overflow-y: auto;
+  transform: scale(0.9) translateY(30px);
+  transition: transform 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-top {
+  height: 220px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+
+.modal-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.modal-gradient-bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, #181818, transparent);
+}
+
+.modal-company-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: #181818;
+  border: none;
+  color: var(--white);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.modal-body { padding: 0 1.5rem 2rem; }
+
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.modal-match { color: #46d369; font-weight: 700; font-size: 0.9rem; }
+.modal-period { color: var(--muted); font-size: 0.82rem; }
+.modal-role-badge {
+  background: var(--red);
+  color: white;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modal-about {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+}
+
+.modal-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.modal-bullets li {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.55;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.modal-bullets li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-size: 0.55rem;
+  top: 0.3em;
+}
+
+.modal-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+}
+
+.modal-tag {
+  background: rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 4%;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: var(--red);
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-name { font-size: 4.5rem; }
+  .featured { flex-direction: column; padding: 1.5rem; }
+  .featured-stats { gap: 2rem; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">CG</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#4c2f242522212d2535290c392f3f2e62292839">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">Now Streaming · Product &amp; Data Strategy</div>
+    <h1 class="hero-name">Chinmaiye<br><span>Gandhi</span></h1>
+    <p class="hero-tagline">Senior Analyst · MTM Candidate @ UCSB · 5+ Years in AdTech &amp; AI/ML</p>
+    <div class="hero-meta">
+      <span class="match-score">97% Match</span>
+      <span class="hero-badge">2025</span>
+      <span class="hero-badge">SQL · Python · AI/ML</span>
+    </div>
+    <div class="hero-buttons">
+      <a href="/cdn-cgi/l/email-protection#791a111017141810001c390c1a0a1b571c1d0c" class="btn-play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        Hire Now
+      </a>
+      <button class="btn-info" onclick="openModal('inmobi')">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        More Info
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- Stats -->
+  <div class="row">
+    <div class="row-title">Key Metrics <span>Highlights</span></div>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-num">5<sup>+</sup></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$3M<sup>+</sup></div>
+        <div class="stat-label">Monthly Spend Managed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">35<sup>%</sup></div>
+        <div class="stat-label">Turnaround Reduction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">99<sup>%</sup></div>
+        <div class="stat-label">SLA Compliance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$130K</div>
+        <div class="stat-label">Monthly Sales Record</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">15<sup>%</sup></div>
+        <div class="stat-label">YoY Account Growth</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30<sup>%</sup></div>
+        <div class="stat-label">MoM Revenue Growth</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <div class="featured" id="experience">
+    <div class="featured-text">
+      <div class="featured-label">Featured Role</div>
+      <div class="featured-logo">
+        <img src="https://wp.logos-download.com/wp-content/uploads/2022/12/InMobi_Logo-700x99.png" alt="InMobi" style="max-height:28px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85;">
+      </div>
+      <div class="featured-headline">Senior Analyst<br>@ InMobi</div>
+      <p class="featured-desc">Led Go-To-Market strategy for AI/ML products, modernized data pipelines to 99% SLA compliance, and drove 15% YoY account scalability for EMEA partners.</p>
+    </div>
+    <div class="featured-stats">
+      <div class="f-stat">
+        <div class="f-stat-num">$3M<sup>+</sup></div>
+        <div class="f-stat-label">Monthly Managed</div>
+      </div>
+      <div class="f-stat">
+        <div class="f-stat-num">2.5<sup>yr</sup></div>
+        <div class="f-stat-label">Tenure</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience Row -->
+  <div class="row">
+    <div class="row-title">Professional Experience <span>4 Roles</span></div>
+    <div class="cards" id="exp-cards">
+
+      <div class="exp-card" onclick="openModal('inmobi')">
+        <div class="exp-card-thumb">
+          <div class="thumb-bg" style="background: linear-gradient(135deg, #0d1520 0%, #1a2a3d 100%)"></div>
+          <img src="https://wp.logos-download.com/wp-content/uploads/2022/12/InMobi_Logo-700x99.png" alt="InMobi" style="position:relative;z-index:1;max-width:140px;max-height:48px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.92;">
+          <div class="thumb-years">2021–2023</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="card-role">Senior Analyst</div>
+          <div class="card-company-name">InMobi</div>
+          <div class="card-period">Mar 2021 – Sep 2023 · India's First Unicorn</div>
+          <div class="card-tags">
+            <span class="card-tag">SQL</span>
+            <span class="card-tag">Python</span>
+            <span class="card-tag">AI/ML GTM</span>
+            <span class="card-tag">UA Analytics</span>
+          </div>
+          <div class="card-desc">Automated user acquisition analytics, led GTM for AI/ML products, managed $3M+ monthly in strategic partnerships.</div>
+        </div>
+      </div>
+
+      <div class="exp-card" onclick="openModal('affle')">
+        <div class="exp-card-thumb">
+          <div class="thumb-bg" style="background: linear-gradient(135deg, #000d1a 0%, #0a2540 100%)"></div>
+          <img src="https://marketsguruji.com/wp-content/uploads/2019/07/Affle-India-Logo.png" alt="Affle" style="position:relative;z-index:1;max-width:140px;max-height:48px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.92;">
+          <div class="thumb-years">2019–2021</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="card-role">Data Operations Executive</div>
+          <div class="card-company-name">Affle</div>
+          <div class="card-period">Oct 2019 – Feb 2021 · AdTech Platform</div>
+          <div class="card-tags">
+            <span class="card-tag">Sisense</span>
+            <span class="card-tag">Fraud Detection</span>
+            <span class="card-tag">Data Modeling</span>
+          </div>
+          <div class="card-desc">Led platform migration, integrated fraud detection systems, and drove 30% month-over-month revenue growth.</div>
+        </div>
+      </div>
+
+      <div class="exp-card" onclick="openModal('collegedunia')">
+        <div class="exp-card-thumb">
+          <div class="thumb-bg" style="background: linear-gradient(135deg, #0d1a00 0%, #1a3300 100%)"></div>
+          <img src="https://latestlogo.com/wp-content/uploads/2024/03/collegedunia.png" alt="Collegedunia" style="position:relative;z-index:1;max-width:160px;max-height:48px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.92;">
+          <div class="thumb-years">2018–2019</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="card-role">Business Analyst</div>
+          <div class="card-company-name">Collegedunia</div>
+          <div class="card-period">Dec 2018 – Sep 2019 · Performance Marketing</div>
+          <div class="card-tags">
+            <span class="card-tag">Strategy</span>
+            <span class="card-tag">Sales</span>
+            <span class="card-tag">Market Positioning</span>
+          </div>
+          <div class="card-desc">Generated $130K monthly channel sales — an all-time company record — through market positioning strategy.</div>
+        </div>
+      </div>
+
+      <div class="exp-card" onclick="openModal('tata')">
+        <div class="exp-card-thumb">
+          <div class="thumb-bg" style="background: linear-gradient(135deg, #1a0000 0%, #400a00 100%)"></div>
+          <img src="https://companieslogo.com/img/orig/TATAMOTORS.NS_BIG.D-38f66b91.png?t=1720244494" alt="Tata Motors" style="position:relative;z-index:1;max-width:140px;max-height:48px;object-fit:contain;opacity:0.92;">
+          <div class="thumb-years">2018</div>
+        </div>
+        <div class="exp-card-body">
+          <div class="card-role">Market Research Intern</div>
+          <div class="card-company-name">TATA Motors</div>
+          <div class="card-period">Jun 2018 – Dec 2018 · India's Largest OEM</div>
+          <div class="card-tags">
+            <span class="card-tag">Market Research</span>
+            <span class="card-tag">Defense</span>
+            <span class="card-tag">Analysis</span>
+          </div>
+          <div class="card-desc">Analyzed the global 8×8 Armored Personnel Carrier market for military applications.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="row" id="education">
+    <div class="row-title">Education <span>2 Degrees</span></div>
+    <div class="cards">
+      <div class="edu-card">
+        <div class="edu-thumb" style="background: linear-gradient(135deg, #001a3d 0%, #003087 100%)">
+          <div class="edu-year-bg">25</div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UC_Santa_Barbara_Wordmark.svg/640px-UC_Santa_Barbara_Wordmark.svg.png" alt="UC Santa Barbara" style="position:relative;z-index:1;max-width:180px;max-height:52px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;">
+        </div>
+        <div class="edu-body">
+          <div class="edu-degree-text">Master of Technology Management</div>
+          <div class="edu-school-text">University of California, Santa Barbara · 2025–Present</div>
+          <span class="edu-badge">▶ Graduate Teaching Assistant</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-thumb" style="background: linear-gradient(135deg, #1a0020 0%, #3d0060 100%)">
+          <div class="edu-year-bg">18</div>
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Guru_Gobind_Singh_Indraprastha_University_logo.png/200px-Guru_Gobind_Singh_Indraprastha_University_logo.png" alt="Indraprastha University" style="position:relative;z-index:1;max-width:160px;max-height:52px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;">
+        </div>
+        <div class="edu-body">
+          <div class="edu-degree-text">B.E. Mechanical Engineering</div>
+          <div class="edu-school-text">Indraprastha University, Delhi · 2014–2018</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="row" id="skills">
+    <div class="row-title">Top Skills <span>Ranked</span></div>
+    <div class="skill-cards" id="skill-row">
+      <div class="skill-card"><div class="skill-rank">#1</div><div class="skill-name-card">SQL</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:95%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#2</div><div class="skill-name-card">Python</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:92%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#3</div><div class="skill-name-card">Strategic Planning</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:93%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#4</div><div class="skill-name-card">Stakeholder Mgmt</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:90%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#5</div><div class="skill-name-card">Data Modeling</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:90%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#6</div><div class="skill-name-card">Excel</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:90%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#7</div><div class="skill-name-card">AI / ML</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:82%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#8</div><div class="skill-name-card">R Language</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:76%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#9</div><div class="skill-name-card">Product Mgmt</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:87%"></div></div></div>
+      <div class="skill-card"><div class="skill-rank">#10</div><div class="skill-name-card">Agile</div><div class="skill-bar-wrap"><div class="skill-bar-fill" style="--w:84%"></div></div></div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CHINMAIYE GANDHI</div>
+  <ul class="footer-links">
+    <li><a href="/cdn-cgi/l/email-protection#91f2f9f8fffcf0f8e8f4d1e4f2e2f3bff4f5e4">Email</a></li>
+    <li><a href="https://linkedin.com/in/chinmaiye" target="_blank">LinkedIn</a></li>
+    <li><a href="https://github.com/chinmaiyeG2" target="_blank">GitHub</a></li>
+    <li><a href="tel:8055688527">Phone</a></li>
+  </ul>
+  <div class="footer-copy">805-568-8527</div>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-top">
+      <div class="modal-gradient" id="modal-gradient"></div>
+      <div class="modal-gradient-bottom"></div>
+      <div class="modal-logo-wrap" id="modal-logo-wrap"></div>
+      <div class="modal-company-title" id="modal-title">Company</div>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta" id="modal-meta"></div>
+      <p class="modal-about" id="modal-about"></p>
+      <ul class="modal-bullets" id="modal-bullets"></ul>
+      <div class="modal-tag-row" id="modal-tags"></div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Particles
+const container = document.getElementById('particles');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 3 + 1;
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    animation-duration:${8+Math.random()*12}s;
+    animation-delay:${Math.random()*8}s;
+  `;
+  container.appendChild(p);
+}
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Drag scroll for card rows
+document.querySelectorAll('.cards, .stat-cards, .skill-cards').forEach(slider => {
+  let isDown = false, startX, scrollLeft;
+  slider.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+  slider.addEventListener('mouseleave', () => isDown = false);
+  slider.addEventListener('mouseup', () => isDown = false);
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    slider.scrollLeft = scrollLeft - (e.pageX - slider.offsetLeft - startX);
+  });
+});
+
+// Skill bar animation on scroll
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.style.getPropertyValue('--w') || getComputedStyle(bar).getPropertyValue('--w');
+        bar.style.width = bar.getAttribute('style').match(/--w:([\d%]+)/)?.[1] || '80%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+const skillRow = document.getElementById('skill-row');
+if (skillRow) skillObs.observe(skillRow);
+
+// Fix skill bar animation
+document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+  const w = bar.style.cssText.match(/--w:([\d%]+)/)?.[1];
+  if (w) bar.dataset.width = w;
+});
+
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width || '80%'; }, 200);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.skill-card').forEach(c => skillObserver.observe(c));
+
+// Modal data
+const modalLogos = {
+  inmobi: `<img src="https://wp.logos-download.com/wp-content/uploads/2022/12/InMobi_Logo-700x99.png" alt="InMobi" style="max-height:36px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;">`,
+  affle:  `<img src="https://marketsguruji.com/wp-content/uploads/2019/07/Affle-India-Logo.png" alt="Affle" style="max-height:36px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;">`,
+  collegedunia: `<img src="https://latestlogo.com/wp-content/uploads/2024/03/collegedunia.png" alt="Collegedunia" style="max-height:36px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.9;">`,
+  tata:   `<img src="https://companieslogo.com/img/orig/TATAMOTORS.NS_BIG.D-38f66b91.png?t=1720244494" alt="Tata Motors" style="max-height:36px;object-fit:contain;opacity:0.9;">`,
+};
+const modalData = {
+  inmobi: {
+    title: 'InMobi',
+    logo: 'https://logo.clearbit.com/inmobi.com',
+    gradient: 'linear-gradient(135deg, #0d1520 0%, #1a2a3d 100%)',
+    match: '98% Match',
+    period: 'Mar 2021 – Sep 2023',
+    role: 'Senior Analyst',
+    about: "India's first unicorn startup — a global advertising platform connecting brands with consumers across mobile and digital.",
+    bullets: [
+      'Developed and executed automated User Acquisition analytics using SQL and Python, generating actionable insights for strategic decisions and campaign optimization.',
+      'Led the Go-To-Market (GTM) strategy for AI/ML products, ensuring alignment with global media agency interests.',
+      'Managed direct relationships with strategic partners driving adoption of UA solutions handling $3M+ monthly.',
+      'Served as Data Product Owner for UA analytics, modernizing legacy pipelines into robust frameworks achieving 99% SLA compliance.',
+      'Automated key reporting workflows with Python-Excel integration, achieving a 35% reduction in data turnaround time.',
+      'Drove cross-functional growth resulting in 15% YoY account scalability for EMEA partners.',
+    ],
+    tags: ['SQL', 'Python', 'AI/ML', 'GTM Strategy', 'UA Analytics', 'Data Product Owner', 'EMEA', 'SLA', 'Executive Reporting']
+  },
+  affle: {
+    title: 'Affle',
+    logo: 'https://logo.clearbit.com/affle.com',
+    gradient: 'linear-gradient(135deg, #000d1a 0%, #003366 100%)',
+    match: '95% Match',
+    period: 'Oct 2019 – Feb 2021',
+    role: 'Data Operations Executive',
+    about: 'A global advertising technology platform specializing in mobile-first consumer intelligence and programmatic solutions.',
+    bullets: [
+      'Led platform migration and integration of fraud detection systems in Sisense and mFaas, improving data integrity and security.',
+      'Reformed business practices resulting in 30% month-over-month revenue growth for campaigns through process optimization and performance analysis.',
+      'Managed redevelopment of the internal publisher database system, enabling enhanced data quality assessment and top-performing optimization strategies.',
+      'Developed algorithms for data modeling and visualization that streamlined day-to-day operations and campaign analysis.',
+    ],
+    tags: ['Sisense', 'mFaas', 'Fraud Detection', 'Data Modeling', 'Visualization', 'Platform Migration', 'Process Optimization']
+  },
+  collegedunia: {
+    title: 'Collegedunia',
+    logo: 'https://logo.clearbit.com/collegedunia.com',
+    gradient: 'linear-gradient(135deg, #0d1a00 0%, #2a5200 100%)',
+    match: '91% Match',
+    period: 'Dec 2018 – Sep 2019',
+    role: 'Business Analyst',
+    about: 'A performance-driven marketing platform connecting students with colleges and universities across India.',
+    bullets: [
+      'Built market positioning strategy by identifying, developing, and defining business relationships with indirect advertisers.',
+      'Generated $130,000 in monthly channel sales revenue — an all-time high for the company.',
+      'Collaborated with stakeholders to design roadmaps for short-term and long-term client relationships.',
+      'Managed prioritization and implemented cost-efficient processes across multiple client accounts.',
+    ],
+    tags: ['Market Positioning', 'Business Strategy', 'Channel Sales', 'Stakeholder Management', 'Roadmapping', 'Client Relations']
+  },
+  tata: {
+    title: 'TATA Motors',
+    logo: 'https://logo.clearbit.com/tatamotors.com',
+    gradient: 'linear-gradient(135deg, #1a0000 0%, #800000 100%)',
+    match: '88% Match',
+    period: 'Jun 2018 – Dec 2018',
+    role: 'Market Research Analyst Intern',
+    about: "India's largest commercial vehicle manufacturer and a global automotive powerhouse with a presence in over 175 countries.",
+    bullets: [
+      'Analyzed the global 8×8 Armored Personnel Carrier (APC) market to understand vehicles currently in service for military applications.',
+      'Conducted in-depth research on TATRA and BEML joint venture vehicles and their competitive positioning.',
+    ],
+    tags: ['Market Research', 'Defense Sector', 'Competitive Analysis', 'Automotive', 'TATRA', 'BEML']
+  }
+};
+
+function openModal(id) {
+  const d = modalData[id];
+  if (!d) return;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-gradient').style.background = d.gradient;
+  const logoWrap = document.getElementById('modal-logo-wrap');
+  logoWrap.innerHTML = modalLogos[id] || '';
+  document.getElementById('modal-meta').innerHTML = `
+    <span class="modal-match">${d.match}</span>
+    <span class="modal-period">${d.period}</span>
+    <span class="modal-role-badge">${d.role}</span>
+  `;
+  document.getElementById('modal-about').textContent = d.about;
+  document.getElementById('modal-bullets').innerHTML = d.bullets.map(b => `<li>${b}</li>`).join('');
+  document.getElementById('modal-tags').innerHTML = d.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalBtn();
+}
+
+function closeModalB
